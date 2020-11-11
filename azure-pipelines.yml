@@ -42,3 +42,13 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Epam(1)(8fe37802-44b6-4c67-9a0d-02cfe898713d)'
+        appType: 'webAppLinux'
+        WebAppName: 'ITatur-products-api'
+        deployToSlotOrASE: true
+        ResourceGroupName: 'adventure-works-rg2'
+        SlotName: 'production'
+        packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
