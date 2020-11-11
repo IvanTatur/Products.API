@@ -52,3 +52,18 @@ steps:
         ResourceGroupName: 'adventure-works-rg2'
         SlotName: 'production'
         packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Epam(8fe37802-44b6-4c67-9a0d-02cfe898713d)'
+    appType: 'webAppLinux'
+    WebAppName: 'ITatur-products-api'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
