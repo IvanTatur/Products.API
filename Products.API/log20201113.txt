@@ -1,0 +1,29 @@
+2020-11-13 09:00:51.060 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-11-13 09:00:51.094 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/  
+2020-11-13 09:00:51.141 +03:00 [INF] Hosting environment: Development
+2020-11-13 09:00:51.142 +03:00 [INF] Content root path: C:\Users\Ivan_Tatur\Desktop\module3\Products.API\Products.API
+2020-11-13 09:00:51.192 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/index.html  
+2020-11-13 09:00:51.212 +03:00 [INF] Request finished in 122.3788ms 301 
+2020-11-13 09:00:51.275 +03:00 [INF] Request finished in 83.3873ms 200 text/html;charset=utf-8
+2020-11-13 09:00:51.288 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/swagger-ui.css  
+2020-11-13 09:00:51.295 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/swagger-ui-standalone-preset.js  
+2020-11-13 09:00:51.295 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/swagger-ui-bundle.js  
+2020-11-13 09:00:51.345 +03:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2020-11-13 09:00:51.345 +03:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2020-11-13 09:00:51.351 +03:00 [INF] Request finished in 62.8098ms 200 text/css
+2020-11-13 09:00:51.351 +03:00 [INF] Request finished in 56.0943ms 200 application/javascript
+2020-11-13 09:00:51.359 +03:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2020-11-13 09:00:51.361 +03:00 [INF] Request finished in 66.2328ms 200 application/javascript
+2020-11-13 09:00:51.533 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/swagger/v1/swagger.json  
+2020-11-13 09:00:51.574 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/favicon-32x32.png  
+2020-11-13 09:00:51.581 +03:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2020-11-13 09:00:51.583 +03:00 [INF] Request finished in 9.1774ms 200 image/png
+2020-11-13 09:00:51.631 +03:00 [INF] Request finished in 98.653ms 200 application/json;charset=utf-8
+2020-11-13 09:00:57.335 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/api/Products  
+2020-11-13 09:00:57.371 +03:00 [INF] Executing endpoint 'Products.API.Controllers.ProductsController.Get (Products.API)'
+2020-11-13 09:00:57.404 +03:00 [INF] Route matched with {action = "Get", controller = "Products"}. Executing controller action with signature System.Threading.Tasks.Task`1[System.Collections.Generic.IEnumerable`1[Products.API.Product]] Get() on controller Products.API.Controllers.ProductsController (Products.API).
+2020-11-13 09:00:57.485 +03:00 [INF] called ProductRepository GetAll()
+2020-11-13 09:00:57.857 +03:00 [WRN] No type was specified for the decimal column 'ListPrice' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+2020-11-13 09:00:57.861 +03:00 [WRN] No type was specified for the decimal column 'StandardCost' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+2020-11-13 09:00:57.862 +03:00 [WRN] No type was specified for the decimal column 'Weight' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
+2020-11-13 09:00:57.897 +03:00 [INF] Entity Framework Core 3.1.9 initialized 'ProductContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
