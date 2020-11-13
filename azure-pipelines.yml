@@ -24,7 +24,7 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    msbuildArgs: '/p:DeployOnBuild=true /p:Configuration=Release /p:WebPublishMethod=FileSystem  /p:SkipInvalidConfigurations=true /p:DeployDefaultTarget=WebPublish /p:DeleteExistingFiles=True  /p:publishUrl="$(build.artifactStagingDirectory)\Products.API" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
@@ -32,10 +32,9 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-- task: AzureRmWebAppDeployment@4
+
+- task: PublishBuildArtifacts@1
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Epam(8fe37802-44b6-4c67-9a0d-02cfe898713d)'
-    appType: 'webApp'
-    WebAppName: 'Azure-module3'
-    packageForLinux: '$(System.DefaultWorkingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
