@@ -38,4 +38,4 @@ steps:
     azureSubscription: 'Epam(8fe37802-44b6-4c67-9a0d-02cfe898713d)'
     appType: 'webApp'
     WebAppName: 'Azure-module3'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)'
