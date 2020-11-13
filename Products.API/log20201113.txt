@@ -27,3 +27,21 @@
 2020-11-13 09:00:57.861 +03:00 [WRN] No type was specified for the decimal column 'StandardCost' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
 2020-11-13 09:00:57.862 +03:00 [WRN] No type was specified for the decimal column 'Weight' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values using 'HasColumnType()'.
 2020-11-13 09:00:57.897 +03:00 [INF] Entity Framework Core 3.1.9 initialized 'ProductContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+2020-11-13 09:43:51.455 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/index.html  
+2020-11-13 09:43:51.436 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2020-11-13 09:43:51.503 +03:00 [INF] Hosting environment: Development
+2020-11-13 09:43:51.505 +03:00 [INF] Content root path: C:\Users\Ivan_Tatur\Desktop\module3\Products.API\Products.API
+2020-11-13 09:43:51.574 +03:00 [INF] Request finished in 126.6092ms 200 text/html;charset=utf-8
+2020-11-13 09:43:51.766 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/swagger/v1/swagger.json  
+2020-11-13 09:43:51.839 +03:00 [INF] Request finished in 73.73ms 200 application/json;charset=utf-8
+2020-11-13 09:43:54.392 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/index.html  
+2020-11-13 09:43:54.396 +03:00 [INF] Request finished in 4.7695ms 200 text/html;charset=utf-8
+2020-11-13 09:43:54.458 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/swagger/v1/swagger.json  
+2020-11-13 09:43:54.464 +03:00 [INF] Request finished in 6.5672ms 200 application/json;charset=utf-8
+2020-11-13 09:43:54.474 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/favicon-32x32.png  
+2020-11-13 09:43:54.497 +03:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2020-11-13 09:43:54.500 +03:00 [INF] Request finished in 25.3443ms 200 image/png
+2020-11-13 09:44:10.638 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/swagger/v1/swagger.json  
+2020-11-13 09:44:10.658 +03:00 [INF] Request finished in 19.6879ms 200 application/json;charset=utf-8
+2020-11-13 09:44:10.710 +03:00 [INF] Request starting HTTP/2.0 GET https://localhost:44344/favicon.ico  
+2020-11-13 09:44:10.739 +03:00 [INF] Request finished in 28.5806ms 404 
