@@ -33,9 +33,11 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-
-- task: PublishPipelineArtifact@1
+- task: AzureRmWebAppDeployment@4
   inputs:
-    targetPath: '$(Pipeline.Workspace)'
-    artifact: 'drop'
-    publishLocation: 'pipeline'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Epam(8fe37802-44b6-4c67-9a0d-02cfe898713d)'
+    appType: 'webApp'
+    WebAppName: 'Azure-module3'
+    packageForLinux: '$(build.artifactStagingDirectory)\Products.API'
+
