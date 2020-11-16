@@ -33,7 +33,7 @@ namespace Products.API
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V3");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V4");
                 c.RoutePrefix = string.Empty;
             });
 
