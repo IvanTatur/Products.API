@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Products.API.Repositories;
+using Serilog;
+using Serilog.Events;
 
 namespace Products.API
 {
@@ -12,6 +15,11 @@ namespace Products.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .WriteTo.Console()
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -23,6 +31,16 @@ namespace Products.API
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddTransient<ProductRepository>();
+
+            //services.AddLogging(loggingBuilder =>
+            //{
+            //    loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+            //    loggingBuilder.AddConsole();
+            //    loggingBuilder.AddDebug();
+            //    loggingBuilder.AddSerilog(new LoggerConfiguration()
+            //        .ReadFrom.Configuration(Configuration)
+            //        .CreateLogger());
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

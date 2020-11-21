@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -9,8 +8,8 @@ namespace Products.API.Repositories
 {
     public class ProductRepository
     {
-        private ProductContext db;
         private readonly ILogger<ProductRepository> logger;
+        private readonly ProductContext db;
 
         public ProductRepository(ProductContext context, ILogger<ProductRepository> logger)
         {

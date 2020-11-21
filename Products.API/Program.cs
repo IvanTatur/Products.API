@@ -11,14 +11,6 @@ namespace Products.API
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .WriteTo.Console(new RenderedCompactJsonFormatter())
-                .WriteTo.Debug(outputTemplate: DateTime.Now.ToString(CultureInfo.InvariantCulture))
-                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
-                .WriteTo.Seq("http://localhost:5341/")
-                .CreateLogger();
-
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -29,5 +21,6 @@ namespace Products.API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
