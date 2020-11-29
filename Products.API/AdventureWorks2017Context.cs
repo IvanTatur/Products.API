@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Products.API
 {
@@ -53,7 +51,9 @@ namespace Products.API
         public virtual DbSet<ProductListPriceHistory> ProductListPriceHistory { get; set; }
         public virtual DbSet<ProductModel> ProductModel { get; set; }
         public virtual DbSet<ProductModelIllustration> ProductModelIllustration { get; set; }
+
         public virtual DbSet<ProductModelProductDescriptionCulture> ProductModelProductDescriptionCulture { get; set; }
+
         //public virtual DbSet<ProductPhoto> ProductPhoto { get; set; }
         public virtual DbSet<ProductProductPhoto> ProductProductPhoto { get; set; }
         public virtual DbSet<ProductReview> ProductReview { get; set; }
@@ -109,9 +109,8 @@ namespace Products.API
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=sql-tatur.eastus.cloudapp.azure.com;Database=AdventureWorks2017;User ID=sa; Password=Adminpassword1;");
-            }
+                optionsBuilder.UseSqlServer(
+                    "Server=sql-tatur.eastus.cloudapp.azure.com;Database=AdventureWorks2017;User ID=sa; Password=Adminpassword1;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -128,7 +127,7 @@ namespace Products.API
 
                 entity.HasIndex(e => e.StateProvinceId);
 
-                entity.HasIndex(e => new { e.AddressLine1, e.AddressLine2, e.City, e.StateProvinceId, e.PostalCode })
+                entity.HasIndex(e => new {e.AddressLine1, e.AddressLine2, e.City, e.StateProvinceId, e.PostalCode})
                     .IsUnique();
 
                 entity.Property(e => e.AddressId)
@@ -162,11 +161,13 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.StateProvinceId)
                     .HasColumnName("StateProvinceID")
-                    .HasComment("Unique identification number for the state or province. Foreign key to StateProvince table.");
+                    .HasComment(
+                        "Unique identification number for the state or province. Foreign key to StateProvince table.");
 
                 entity.HasOne(d => d.StateProvince)
                     .WithMany(p => p.Address)
@@ -205,7 +206,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
             });
 
             modelBuilder.Entity<AwbuildVersion>(entity =>
@@ -246,11 +248,12 @@ namespace Products.API
 
                 entity.ToTable("BillOfMaterials", "Production");
 
-                entity.HasComment("Items required to make bicycles and bicycle subassemblies. It identifies the heirarchical relationship between a parent product and its components.");
+                entity.HasComment(
+                    "Items required to make bicycles and bicycle subassemblies. It identifies the heirarchical relationship between a parent product and its components.");
 
                 entity.HasIndex(e => e.UnitMeasureCode);
 
-                entity.HasIndex(e => new { e.ProductAssemblyId, e.ComponentId, e.StartDate })
+                entity.HasIndex(e => new {e.ProductAssemblyId, e.ComponentId, e.StartDate})
                     .HasName("AK_BillOfMaterials_ProductAssemblyID_ComponentID_StartDate")
                     .IsUnique()
                     .IsClustered();
@@ -315,7 +318,8 @@ namespace Products.API
             {
                 entity.ToTable("BusinessEntity", "Person");
 
-                entity.HasComment("Source of the ID that connects vendors, customers, and employees with address and contact information.");
+                entity.HasComment(
+                    "Source of the ID that connects vendors, customers, and employees with address and contact information.");
 
                 entity.HasIndex(e => e.Rowguid)
                     .HasName("AK_BusinessEntity_rowguid")
@@ -333,17 +337,19 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
             });
 
             modelBuilder.Entity<BusinessEntityAddress>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.AddressId, e.AddressTypeId })
+                entity.HasKey(e => new {e.BusinessEntityId, e.AddressId, e.AddressTypeId})
                     .HasName("PK_BusinessEntityAddress_BusinessEntityID_AddressID_AddressTypeID");
 
                 entity.ToTable("BusinessEntityAddress", "Person");
 
-                entity.HasComment("Cross-reference table mapping customers, vendors, and employees to their addresses.");
+                entity.HasComment(
+                    "Cross-reference table mapping customers, vendors, and employees to their addresses.");
 
                 entity.HasIndex(e => e.AddressId);
 
@@ -373,7 +379,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.BusinessEntityAddress)
@@ -393,7 +400,7 @@ namespace Products.API
 
             modelBuilder.Entity<BusinessEntityContact>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.PersonId, e.ContactTypeId })
+                entity.HasKey(e => new {e.BusinessEntityId, e.PersonId, e.ContactTypeId})
                     .HasName("PK_BusinessEntityContact_BusinessEntityID_PersonID_ContactTypeID");
 
                 entity.ToTable("BusinessEntityContact", "Person");
@@ -428,7 +435,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.HasOne(d => d.BusinessEntity)
                     .WithMany(p => p.BusinessEntityContact)
@@ -501,7 +509,7 @@ namespace Products.API
 
             modelBuilder.Entity<CountryRegionCurrency>(entity =>
             {
-                entity.HasKey(e => new { e.CountryRegionCode, e.CurrencyCode })
+                entity.HasKey(e => new {e.CountryRegionCode, e.CurrencyCode})
                     .HasName("PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode");
 
                 entity.ToTable("CountryRegionCurrency", "Sales");
@@ -631,7 +639,7 @@ namespace Products.API
 
                 entity.HasComment("Currency exchange rates.");
 
-                entity.HasIndex(e => new { e.CurrencyRateDate, e.FromCurrencyCode, e.ToCurrencyCode })
+                entity.HasIndex(e => new {e.CurrencyRateDate, e.FromCurrencyCode, e.ToCurrencyCode})
                     .HasName("AK_CurrencyRate_CurrencyRateDate_FromCurrencyCode_ToCurrencyCode")
                     .IsUnique();
 
@@ -718,7 +726,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.StoreId)
                     .HasColumnName("StoreID")
@@ -726,7 +735,8 @@ namespace Products.API
 
                 entity.Property(e => e.TerritoryId)
                     .HasColumnName("TerritoryID")
-                    .HasComment("ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.");
+                    .HasComment(
+                        "ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.Customer)
@@ -747,7 +757,8 @@ namespace Products.API
                     .HasName("PK_DatabaseLog_DatabaseLogID")
                     .IsClustered(false);
 
-                entity.HasComment("Audit table tracking all DDL changes made to the AdventureWorks database. Data is captured by the database trigger ddlDatabaseTriggerLog.");
+                entity.HasComment(
+                    "Audit table tracking all DDL changes made to the AdventureWorks database. Data is captured by the database trigger ddlDatabaseTriggerLog.");
 
                 entity.Property(e => e.DatabaseLogId)
                     .HasColumnName("DatabaseLogID")
@@ -818,7 +829,7 @@ namespace Products.API
 
             modelBuilder.Entity<EmailAddress>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.EmailAddressId })
+                entity.HasKey(e => new {e.BusinessEntityId, e.EmailAddressId})
                     .HasName("PK_EmailAddress_BusinessEntityID_EmailAddressID");
 
                 entity.ToTable("EmailAddress", "Person");
@@ -829,7 +840,8 @@ namespace Products.API
 
                 entity.Property(e => e.BusinessEntityId)
                     .HasColumnName("BusinessEntityID")
-                    .HasComment("Primary key. Person associated with this email address.  Foreign key to Person.BusinessEntityID");
+                    .HasComment(
+                        "Primary key. Person associated with this email address.  Foreign key to Person.BusinessEntityID");
 
                 entity.Property(e => e.EmailAddressId)
                     .HasColumnName("EmailAddressID")
@@ -849,7 +861,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.HasOne(d => d.BusinessEntity)
                     .WithMany(p => p.EmailAddress)
@@ -937,12 +950,14 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SalariedFlag)
                     .IsRequired()
                     .HasDefaultValueSql("((1))")
-                    .HasComment("Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.");
+                    .HasComment(
+                        "Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.");
 
                 entity.Property(e => e.SickLeaveHours).HasComment("Number of available sick leave hours.");
 
@@ -956,7 +971,7 @@ namespace Products.API
 
             modelBuilder.Entity<EmployeeDepartmentHistory>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.StartDate, e.DepartmentId, e.ShiftId })
+                entity.HasKey(e => new {e.BusinessEntityId, e.StartDate, e.DepartmentId, e.ShiftId})
                     .HasName("PK_EmployeeDepartmentHistory_BusinessEntityID_StartDate_DepartmentID");
 
                 entity.ToTable("EmployeeDepartmentHistory", "HumanResources");
@@ -977,7 +992,8 @@ namespace Products.API
 
                 entity.Property(e => e.DepartmentId)
                     .HasColumnName("DepartmentID")
-                    .HasComment("Department in which the employee worked including currently. Foreign key to Department.DepartmentID.");
+                    .HasComment(
+                        "Department in which the employee worked including currently. Foreign key to Department.DepartmentID.");
 
                 entity.Property(e => e.ShiftId)
                     .HasColumnName("ShiftID")
@@ -1010,7 +1026,7 @@ namespace Products.API
 
             modelBuilder.Entity<EmployeePayHistory>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.RateChangeDate })
+                entity.HasKey(e => new {e.BusinessEntityId, e.RateChangeDate})
                     .HasName("PK_EmployeePayHistory_BusinessEntityID_RateChangeDate");
 
                 entity.ToTable("EmployeePayHistory", "HumanResources");
@@ -1030,7 +1046,8 @@ namespace Products.API
                     .HasDefaultValueSql("(getdate())")
                     .HasComment("Date and time the record was last updated.");
 
-                entity.Property(e => e.PayFrequency).HasComment("1 = Salary received monthly, 2 = Salary received biweekly");
+                entity.Property(e => e.PayFrequency)
+                    .HasComment("1 = Salary received monthly, 2 = Salary received biweekly");
 
                 entity.Property(e => e.Rate)
                     .HasColumnType("money")
@@ -1044,7 +1061,8 @@ namespace Products.API
 
             modelBuilder.Entity<ErrorLog>(entity =>
             {
-                entity.HasComment("Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.");
+                entity.HasComment(
+                    "Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.");
 
                 entity.Property(e => e.ErrorLogId)
                     .HasColumnName("ErrorLogID")
@@ -1112,7 +1130,8 @@ namespace Products.API
 
                 entity.Property(e => e.BusinessEntityId)
                     .HasColumnName("BusinessEntityID")
-                    .HasComment("Employee identification number if applicant was hired. Foreign key to Employee.BusinessEntityID.");
+                    .HasComment(
+                        "Employee identification number if applicant was hired. Foreign key to Employee.BusinessEntityID.");
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
@@ -1196,7 +1215,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.HasOne(d => d.BusinessEntity)
                     .WithOne(p => p.Password)
@@ -1211,7 +1231,8 @@ namespace Products.API
 
                 entity.ToTable("Person", "Person");
 
-                entity.HasComment("Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts.");
+                entity.HasComment(
+                    "Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts.");
 
                 entity.HasIndex(e => e.AdditionalContactInfo)
                     .HasName("PXML_Person_AddContact");
@@ -1223,7 +1244,7 @@ namespace Products.API
                     .HasName("AK_Person_rowguid")
                     .IsUnique();
 
-                entity.HasIndex(e => new { e.LastName, e.FirstName, e.MiddleName });
+                entity.HasIndex(e => new {e.LastName, e.FirstName, e.MiddleName});
 
                 entity.Property(e => e.BusinessEntityId)
                     .HasColumnName("BusinessEntityID")
@@ -1236,9 +1257,11 @@ namespace Products.API
 
                 entity.Property(e => e.Demographics)
                     .HasColumnType("xml")
-                    .HasComment("Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis.");
+                    .HasComment(
+                        "Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis.");
 
-                entity.Property(e => e.EmailPromotion).HasComment("0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. ");
+                entity.Property(e => e.EmailPromotion).HasComment(
+                    "0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. ");
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
@@ -1259,18 +1282,22 @@ namespace Products.API
                     .HasDefaultValueSql("(getdate())")
                     .HasComment("Date and time the record was last updated.");
 
-                entity.Property(e => e.NameStyle).HasComment("0 = The data in FirstName and LastName are stored in western style (first name, last name) order.  1 = Eastern style (last name, first name) order.");
+                entity.Property(e => e.NameStyle)
+                    .HasComment(
+                        "0 = The data in FirstName and LastName are stored in western style (first name, last name) order.  1 = Eastern style (last name, first name) order.");
 
                 entity.Property(e => e.PersonType)
                     .IsRequired()
                     .HasMaxLength(2)
                     .IsFixedLength()
-                    .HasComment("Primary type of person: SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact");
+                    .HasComment(
+                        "Primary type of person: SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact");
 
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.Suffix)
                     .HasMaxLength(10)
@@ -1288,12 +1315,13 @@ namespace Products.API
 
             modelBuilder.Entity<PersonCreditCard>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.CreditCardId })
+                entity.HasKey(e => new {e.BusinessEntityId, e.CreditCardId})
                     .HasName("PK_PersonCreditCard_BusinessEntityID_CreditCardID");
 
                 entity.ToTable("PersonCreditCard", "Sales");
 
-                entity.HasComment("Cross-reference table mapping people to their credit card information in the CreditCard table. ");
+                entity.HasComment(
+                    "Cross-reference table mapping people to their credit card information in the CreditCard table. ");
 
                 entity.Property(e => e.BusinessEntityId)
                     .HasColumnName("BusinessEntityID")
@@ -1321,7 +1349,7 @@ namespace Products.API
 
             modelBuilder.Entity<PersonPhone>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.PhoneNumber, e.PhoneNumberTypeId })
+                entity.HasKey(e => new {e.BusinessEntityId, e.PhoneNumber, e.PhoneNumberTypeId})
                     .HasName("PK_PersonPhone_BusinessEntityID_PhoneNumber_PhoneNumberTypeID");
 
                 entity.ToTable("PersonPhone", "Person");
@@ -1410,7 +1438,8 @@ namespace Products.API
                     .HasMaxLength(15)
                     .HasComment("Product color.");
 
-                entity.Property(e => e.DaysToManufacture).HasComment("Number of days required to manufacture the product.");
+                entity.Property(e => e.DaysToManufacture)
+                    .HasComment("Number of days required to manufacture the product.");
 
                 entity.Property(e => e.DiscontinuedDate)
                     .HasColumnType("datetime")
@@ -1447,7 +1476,8 @@ namespace Products.API
 
                 entity.Property(e => e.ProductModelId)
                     .HasColumnName("ProductModelID")
-                    .HasComment("Product is a member of this product model. Foreign key to ProductModel.ProductModelID.");
+                    .HasComment(
+                        "Product is a member of this product model. Foreign key to ProductModel.ProductModelID.");
 
                 entity.Property(e => e.ProductNumber)
                     .IsRequired()
@@ -1456,14 +1486,17 @@ namespace Products.API
 
                 entity.Property(e => e.ProductSubcategoryId)
                     .HasColumnName("ProductSubcategoryID")
-                    .HasComment("Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. ");
+                    .HasComment(
+                        "Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. ");
 
-                entity.Property(e => e.ReorderPoint).HasComment("Inventory level that triggers a purchase order or work order. ");
+                entity.Property(e => e.ReorderPoint)
+                    .HasComment("Inventory level that triggers a purchase order or work order. ");
 
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SafetyStockLevel).HasComment("Minimum inventory quantity. ");
 
@@ -1550,12 +1583,13 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
             });
 
             modelBuilder.Entity<ProductCostHistory>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.StartDate })
+                entity.HasKey(e => new {e.ProductId, e.StartDate})
                     .HasName("PK_ProductCostHistory_ProductID_StartDate");
 
                 entity.ToTable("ProductCostHistory", "Production");
@@ -1616,12 +1650,13 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
             });
 
             modelBuilder.Entity<ProductInventory>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.LocationId })
+                entity.HasKey(e => new {e.ProductId, e.LocationId})
                     .HasName("PK_ProductInventory_ProductID_LocationID");
 
                 entity.ToTable("ProductInventory", "Production");
@@ -1648,7 +1683,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.Shelf)
                     .IsRequired()
@@ -1668,7 +1704,7 @@ namespace Products.API
 
             modelBuilder.Entity<ProductListPriceHistory>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.StartDate })
+                entity.HasKey(e => new {e.ProductId, e.StartDate})
                     .HasName("PK_ProductListPriceHistory_ProductID_StartDate");
 
                 entity.ToTable("ProductListPriceHistory", "Production");
@@ -1747,12 +1783,13 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
             });
 
             modelBuilder.Entity<ProductModelIllustration>(entity =>
             {
-                entity.HasKey(e => new { e.ProductModelId, e.IllustrationId })
+                entity.HasKey(e => new {e.ProductModelId, e.IllustrationId})
                     .HasName("PK_ProductModelIllustration_ProductModelID_IllustrationID");
 
                 entity.ToTable("ProductModelIllustration", "Production");
@@ -1785,12 +1822,13 @@ namespace Products.API
 
             modelBuilder.Entity<ProductModelProductDescriptionCulture>(entity =>
             {
-                entity.HasKey(e => new { e.ProductModelId, e.ProductDescriptionId, e.CultureId })
+                entity.HasKey(e => new {e.ProductModelId, e.ProductDescriptionId, e.CultureId})
                     .HasName("PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID");
 
                 entity.ToTable("ProductModelProductDescriptionCulture", "Production");
 
-                entity.HasComment("Cross-reference table mapping product descriptions and the language the description is written in.");
+                entity.HasComment(
+                    "Cross-reference table mapping product descriptions and the language the description is written in.");
 
                 entity.Property(e => e.ProductModelId)
                     .HasColumnName("ProductModelID")
@@ -1857,7 +1895,7 @@ namespace Products.API
 
             modelBuilder.Entity<ProductProductPhoto>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.ProductPhotoId })
+                entity.HasKey(e => new {e.ProductId, e.ProductPhotoId})
                     .HasName("PK_ProductProductPhoto_ProductID_ProductPhotoID")
                     .IsClustered(false);
 
@@ -1878,7 +1916,8 @@ namespace Products.API
                     .HasDefaultValueSql("(getdate())")
                     .HasComment("Date and time the record was last updated.");
 
-                entity.Property(e => e.Primary).HasComment("0 = Photo is not the principal image. 1 = Photo is the principal image.");
+                entity.Property(e => e.Primary)
+                    .HasComment("0 = Photo is not the principal image. 1 = Photo is the principal image.");
 
                 //entity.HasOne(d => d.Product)
                 //    .WithMany(p => p.ProductProductPhoto)
@@ -1897,7 +1936,7 @@ namespace Products.API
 
                 entity.HasComment("Customer reviews of products they have purchased.");
 
-                entity.HasIndex(e => new { e.Comments, e.ProductId, e.ReviewerName })
+                entity.HasIndex(e => new {e.Comments, e.ProductId, e.ReviewerName})
                     .HasName("IX_ProductReview_ProductID_Name");
 
                 entity.Property(e => e.ProductReviewId)
@@ -1922,7 +1961,8 @@ namespace Products.API
                     .HasColumnName("ProductID")
                     .HasComment("Product identification number. Foreign key to Product.ProductID.");
 
-                entity.Property(e => e.Rating).HasComment("Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.");
+                entity.Property(e => e.Rating)
+                    .HasComment("Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.");
 
                 entity.Property(e => e.ReviewDate)
                     .HasColumnType("datetime")
@@ -1970,12 +2010,14 @@ namespace Products.API
 
                 entity.Property(e => e.ProductCategoryId)
                     .HasColumnName("ProductCategoryID")
-                    .HasComment("Product category identification number. Foreign key to ProductCategory.ProductCategoryID.");
+                    .HasComment(
+                        "Product category identification number. Foreign key to ProductCategory.ProductCategoryID.");
 
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.HasOne(d => d.ProductCategory)
                     .WithMany(p => p.ProductSubcategory)
@@ -1985,7 +2027,7 @@ namespace Products.API
 
             modelBuilder.Entity<ProductVendor>(entity =>
             {
-                entity.HasKey(e => new { e.ProductId, e.BusinessEntityId })
+                entity.HasKey(e => new {e.ProductId, e.BusinessEntityId})
                     .HasName("PK_ProductVendor_ProductID_BusinessEntityID");
 
                 entity.ToTable("ProductVendor", "Purchasing");
@@ -2004,7 +2046,8 @@ namespace Products.API
                     .HasColumnName("BusinessEntityID")
                     .HasComment("Primary key. Foreign key to Vendor.BusinessEntityID.");
 
-                entity.Property(e => e.AverageLeadTime).HasComment("The average span of time (in days) between placing an order with the vendor and receiving the purchased product.");
+                entity.Property(e => e.AverageLeadTime).HasComment(
+                    "The average span of time (in days) between placing an order with the vendor and receiving the purchased product.");
 
                 entity.Property(e => e.LastReceiptCost)
                     .HasColumnType("money")
@@ -2053,12 +2096,13 @@ namespace Products.API
 
             modelBuilder.Entity<PurchaseOrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.PurchaseOrderId, e.PurchaseOrderDetailId })
+                entity.HasKey(e => new {e.PurchaseOrderId, e.PurchaseOrderDetailId})
                     .HasName("PK_PurchaseOrderDetail_PurchaseOrderID_PurchaseOrderDetailID");
 
                 entity.ToTable("PurchaseOrderDetail", "Purchasing");
 
-                entity.HasComment("Individual products associated with a specific purchase order. See PurchaseOrderHeader.");
+                entity.HasComment(
+                    "Individual products associated with a specific purchase order. See PurchaseOrderHeader.");
 
                 entity.HasIndex(e => e.ProductId);
 
@@ -2155,7 +2199,8 @@ namespace Products.API
                     .HasDefaultValueSql("(getdate())")
                     .HasComment("Purchase order creation date.");
 
-                entity.Property(e => e.RevisionNumber).HasComment("Incremental number to track changes to the purchase order over time.");
+                entity.Property(e => e.RevisionNumber)
+                    .HasComment("Incremental number to track changes to the purchase order over time.");
 
                 entity.Property(e => e.ShipDate)
                     .HasColumnType("datetime")
@@ -2172,7 +2217,8 @@ namespace Products.API
                 entity.Property(e => e.SubTotal)
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0.00))")
-                    .HasComment("Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID.");
+                    .HasComment(
+                        "Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID.");
 
                 entity.Property(e => e.TaxAmt)
                     .HasColumnType("money")
@@ -2186,7 +2232,8 @@ namespace Products.API
 
                 entity.Property(e => e.VendorId)
                     .HasColumnName("VendorID")
-                    .HasComment("Vendor with whom the purchase order is placed. Foreign key to Vendor.BusinessEntityID.");
+                    .HasComment(
+                        "Vendor with whom the purchase order is placed. Foreign key to Vendor.BusinessEntityID.");
 
                 entity.HasOne(d => d.Employee)
                     .WithMany(p => p.PurchaseOrderHeader)
@@ -2206,7 +2253,7 @@ namespace Products.API
 
             modelBuilder.Entity<SalesOrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.SalesOrderId, e.SalesOrderDetailId })
+                entity.HasKey(e => new {e.SalesOrderId, e.SalesOrderDetailId})
                     .HasName("PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID");
 
                 entity.ToTable("SalesOrderDetail", "Sales");
@@ -2251,7 +2298,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SpecialOfferId)
                     .HasColumnName("SpecialOfferID")
@@ -2271,7 +2319,7 @@ namespace Products.API
 
                 entity.HasOne(d => d.SpecialOfferProduct)
                     .WithMany(p => p.SalesOrderDetail)
-                    .HasForeignKey(d => new { d.SpecialOfferId, d.ProductId })
+                    .HasForeignKey(d => new {d.SpecialOfferId, d.ProductId})
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID");
             });
@@ -2358,12 +2406,14 @@ namespace Products.API
                     .HasMaxLength(25)
                     .HasComment("Customer purchase order number reference. ");
 
-                entity.Property(e => e.RevisionNumber).HasComment("Incremental number to track changes to the sales order over time.");
+                entity.Property(e => e.RevisionNumber)
+                    .HasComment("Incremental number to track changes to the sales order over time.");
 
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SalesOrderNumber)
                     .IsRequired()
@@ -2373,7 +2423,8 @@ namespace Products.API
 
                 entity.Property(e => e.SalesPersonId)
                     .HasColumnName("SalesPersonID")
-                    .HasComment("Sales person who created the sales order. Foreign key to SalesPerson.BusinessEntityID.");
+                    .HasComment(
+                        "Sales person who created the sales order. Foreign key to SalesPerson.BusinessEntityID.");
 
                 entity.Property(e => e.ShipDate)
                     .HasColumnType("datetime")
@@ -2389,12 +2440,14 @@ namespace Products.API
 
                 entity.Property(e => e.Status)
                     .HasDefaultValueSql("((1))")
-                    .HasComment("Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled");
+                    .HasComment(
+                        "Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled");
 
                 entity.Property(e => e.SubTotal)
                     .HasColumnType("money")
                     .HasDefaultValueSql("((0.00))")
-                    .HasComment("Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.");
+                    .HasComment(
+                        "Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.");
 
                 entity.Property(e => e.TaxAmt)
                     .HasColumnType("money")
@@ -2403,7 +2456,8 @@ namespace Products.API
 
                 entity.Property(e => e.TerritoryId)
                     .HasColumnName("TerritoryID")
-                    .HasComment("Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.");
+                    .HasComment(
+                        "Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.");
 
                 entity.Property(e => e.TotalDue)
                     .HasColumnType("money")
@@ -2449,7 +2503,7 @@ namespace Products.API
 
             modelBuilder.Entity<SalesOrderHeaderSalesReason>(entity =>
             {
-                entity.HasKey(e => new { e.SalesOrderId, e.SalesReasonId })
+                entity.HasKey(e => new {e.SalesOrderId, e.SalesReasonId})
                     .HasName("PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID");
 
                 entity.ToTable("SalesOrderHeaderSalesReason", "Sales");
@@ -2515,7 +2569,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SalesLastYear)
                     .HasColumnType("money")
@@ -2548,7 +2603,7 @@ namespace Products.API
 
             modelBuilder.Entity<SalesPersonQuotaHistory>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.QuotaDate })
+                entity.HasKey(e => new {e.BusinessEntityId, e.QuotaDate})
                     .HasName("PK_SalesPersonQuotaHistory_BusinessEntityID_QuotaDate");
 
                 entity.ToTable("SalesPersonQuotaHistory", "Sales");
@@ -2575,7 +2630,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SalesQuota)
                     .HasColumnType("money")
@@ -2623,7 +2679,7 @@ namespace Products.API
                     .HasName("AK_SalesTaxRate_rowguid")
                     .IsUnique();
 
-                entity.HasIndex(e => new { e.StateProvinceId, e.TaxType })
+                entity.HasIndex(e => new {e.StateProvinceId, e.TaxType})
                     .HasName("AK_SalesTaxRate_StateProvinceID_TaxType")
                     .IsUnique();
 
@@ -2644,7 +2700,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.StateProvinceId)
                     .HasColumnName("StateProvinceID")
@@ -2655,7 +2712,9 @@ namespace Products.API
                     .HasDefaultValueSql("((0.00))")
                     .HasComment("Tax rate amount.");
 
-                entity.Property(e => e.TaxType).HasComment("1 = Tax applied to retail transactions, 2 = Tax applied to wholesale transactions, 3 = Tax applied to all sales (retail and wholesale) transactions.");
+                entity.Property(e => e.TaxType)
+                    .HasComment(
+                        "1 = Tax applied to retail transactions, 2 = Tax applied to wholesale transactions, 3 = Tax applied to all sales (retail and wholesale) transactions.");
 
                 entity.HasOne(d => d.StateProvince)
                     .WithMany(p => p.SalesTaxRate)
@@ -2698,7 +2757,8 @@ namespace Products.API
                 entity.Property(e => e.CountryRegionCode)
                     .IsRequired()
                     .HasMaxLength(3)
-                    .HasComment("ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode. ");
+                    .HasComment(
+                        "ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode. ");
 
                 entity.Property(e => e.Group)
                     .IsRequired()
@@ -2718,7 +2778,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SalesLastYear)
                     .HasColumnType("money")
@@ -2739,7 +2800,7 @@ namespace Products.API
 
             modelBuilder.Entity<SalesTerritoryHistory>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessEntityId, e.StartDate, e.TerritoryId })
+                entity.HasKey(e => new {e.BusinessEntityId, e.StartDate, e.TerritoryId})
                     .HasName("PK_SalesTerritoryHistory_BusinessEntityID_StartDate_TerritoryID");
 
                 entity.ToTable("SalesTerritoryHistory", "Sales");
@@ -2760,7 +2821,8 @@ namespace Products.API
 
                 entity.Property(e => e.TerritoryId)
                     .HasColumnName("TerritoryID")
-                    .HasComment("Primary key. Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.");
+                    .HasComment(
+                        "Primary key. Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.");
 
                 entity.Property(e => e.EndDate)
                     .HasColumnType("datetime")
@@ -2774,7 +2836,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.HasOne(d => d.BusinessEntity)
                     .WithMany(p => p.SalesTerritoryHistory)
@@ -2822,7 +2885,7 @@ namespace Products.API
                     .HasName("AK_Shift_Name")
                     .IsUnique();
 
-                entity.HasIndex(e => new { e.StartTime, e.EndTime })
+                entity.HasIndex(e => new {e.StartTime, e.EndTime})
                     .HasName("AK_Shift_StartTime_EndTime")
                     .IsUnique();
 
@@ -2877,7 +2940,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.ShipBase)
                     .HasColumnType("money")
@@ -2896,7 +2960,7 @@ namespace Products.API
 
                 entity.HasComment("Contains online customer orders until the order is submitted or cancelled.");
 
-                entity.HasIndex(e => new { e.ShoppingCartId, e.ProductId });
+                entity.HasIndex(e => new {e.ShoppingCartId, e.ProductId});
 
                 entity.Property(e => e.ShoppingCartItemId)
                     .HasColumnName("ShoppingCartItemID")
@@ -2977,7 +3041,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.StartDate)
                     .HasColumnType("datetime")
@@ -2991,7 +3056,7 @@ namespace Products.API
 
             modelBuilder.Entity<SpecialOfferProduct>(entity =>
             {
-                entity.HasKey(e => new { e.SpecialOfferId, e.ProductId })
+                entity.HasKey(e => new {e.SpecialOfferId, e.ProductId})
                     .HasName("PK_SpecialOfferProduct_SpecialOfferID_ProductID");
 
                 entity.ToTable("SpecialOfferProduct", "Sales");
@@ -3020,7 +3085,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 //entity.HasOne(d => d.Product)
                 //    .WithMany(p => p.SpecialOfferProduct)
@@ -3047,7 +3113,7 @@ namespace Products.API
                     .HasName("AK_StateProvince_rowguid")
                     .IsUnique();
 
-                entity.HasIndex(e => new { e.StateProvinceCode, e.CountryRegionCode })
+                entity.HasIndex(e => new {e.StateProvinceCode, e.CountryRegionCode})
                     .HasName("AK_StateProvince_StateProvinceCode_CountryRegionCode")
                     .IsUnique();
 
@@ -3058,12 +3124,14 @@ namespace Products.API
                 entity.Property(e => e.CountryRegionCode)
                     .IsRequired()
                     .HasMaxLength(3)
-                    .HasComment("ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode. ");
+                    .HasComment(
+                        "ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode. ");
 
                 entity.Property(e => e.IsOnlyStateProvinceFlag)
                     .IsRequired()
                     .HasDefaultValueSql("((1))")
-                    .HasComment("0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.");
+                    .HasComment(
+                        "0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.");
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
@@ -3078,7 +3146,8 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.StateProvinceCode)
                     .IsRequired()
@@ -3088,7 +3157,8 @@ namespace Products.API
 
                 entity.Property(e => e.TerritoryId)
                     .HasColumnName("TerritoryID")
-                    .HasComment("ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.");
+                    .HasComment(
+                        "ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.");
 
                 entity.HasOne(d => d.CountryRegionCodeNavigation)
                     .WithMany(p => p.StateProvince)
@@ -3126,7 +3196,8 @@ namespace Products.API
 
                 entity.Property(e => e.Demographics)
                     .HasColumnType("xml")
-                    .HasComment("Demographic informationg about the store such as the number of employees, annual sales and store type.");
+                    .HasComment(
+                        "Demographic informationg about the store such as the number of employees, annual sales and store type.");
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
@@ -3141,11 +3212,13 @@ namespace Products.API
                 entity.Property(e => e.Rowguid)
                     .HasColumnName("rowguid")
                     .HasDefaultValueSql("(newid())")
-                    .HasComment("ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
+                    .HasComment(
+                        "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 
                 entity.Property(e => e.SalesPersonId)
                     .HasColumnName("SalesPersonID")
-                    .HasComment("ID of the sales person assigned to the customer. Foreign key to SalesPerson.BusinessEntityID.");
+                    .HasComment(
+                        "ID of the sales person assigned to the customer. Foreign key to SalesPerson.BusinessEntityID.");
 
                 entity.HasOne(d => d.BusinessEntity)
                     .WithOne(p => p.Store)
@@ -3164,11 +3237,12 @@ namespace Products.API
 
                 entity.ToTable("TransactionHistory", "Production");
 
-                entity.HasComment("Record of each purchase order, sales order, or work order transaction year to date.");
+                entity.HasComment(
+                    "Record of each purchase order, sales order, or work order transaction year to date.");
 
                 entity.HasIndex(e => e.ProductId);
 
-                entity.HasIndex(e => new { e.ReferenceOrderId, e.ReferenceOrderLineId });
+                entity.HasIndex(e => new {e.ReferenceOrderId, e.ReferenceOrderLineId});
 
                 entity.Property(e => e.TransactionId)
                     .HasColumnName("TransactionID")
@@ -3225,7 +3299,7 @@ namespace Products.API
 
                 entity.HasIndex(e => e.ProductId);
 
-                entity.HasIndex(e => new { e.ReferenceOrderId, e.ReferenceOrderLineId });
+                entity.HasIndex(e => new {e.ReferenceOrderId, e.ReferenceOrderLineId});
 
                 entity.Property(e => e.TransactionId)
                     .HasColumnName("TransactionID")
@@ -3302,7 +3376,8 @@ namespace Products.API
 
                 entity.ToView("vAdditionalContactInfo", "Person");
 
-                entity.HasComment("Displays the contact name and content from each element in the xml column AdditionalContactInfo for that person.");
+                entity.HasComment(
+                    "Displays the contact name and content from each element in the xml column AdditionalContactInfo for that person.");
 
                 entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
 
@@ -3488,7 +3563,8 @@ namespace Products.API
 
                 entity.ToView("vIndividualCustomer", "Sales");
 
-                entity.HasComment("Individual customers (names and addresses) that purchase Adventure Works Cycles products online.");
+                entity.HasComment(
+                    "Individual customers (names and addresses) that purchase Adventure Works Cycles products online.");
 
                 entity.Property(e => e.AddressLine1)
                     .IsRequired()
@@ -3606,7 +3682,8 @@ namespace Products.API
 
                 entity.ToView("vJobCandidateEducation", "HumanResources");
 
-                entity.HasComment("Displays the content from each education related element in the xml column Resume in the HumanResources.JobCandidate table. The content has been localized into French, Simplified Chinese and Thai. Some data may not display correctly unless supplemental language support is installed.");
+                entity.HasComment(
+                    "Displays the content from each education related element in the xml column Resume in the HumanResources.JobCandidate table. The content has been localized into French, Simplified Chinese and Thai. Some data may not display correctly unless supplemental language support is installed.");
 
                 entity.Property(e => e.EduDegree)
                     .HasColumnName("Edu.Degree")
@@ -3665,7 +3742,8 @@ namespace Products.API
 
                 entity.ToView("vJobCandidateEmployment", "HumanResources");
 
-                entity.HasComment("Displays the content from each employement history related element in the xml column Resume in the HumanResources.JobCandidate table. The content has been localized into French, Simplified Chinese and Thai. Some data may not display correctly unless supplemental language support is installed.");
+                entity.HasComment(
+                    "Displays the content from each employement history related element in the xml column Resume in the HumanResources.JobCandidate table. The content has been localized into French, Simplified Chinese and Thai. Some data may not display correctly unless supplemental language support is installed.");
 
                 entity.Property(e => e.EmpEndDate)
                     .HasColumnName("Emp.EndDate")
@@ -3706,7 +3784,8 @@ namespace Products.API
 
                 entity.ToView("vPersonDemographics", "Sales");
 
-                entity.HasComment("Displays the content from each element in the xml column Demographics for each customer in the Person.Person table.");
+                entity.HasComment(
+                    "Displays the content from each element in the xml column Demographics for each customer in the Person.Person table.");
 
                 entity.Property(e => e.BirthDate).HasColumnType("datetime");
 
@@ -3735,7 +3814,8 @@ namespace Products.API
 
                 entity.ToView("vProductAndDescription", "Production");
 
-                entity.HasComment("Product names and descriptions. Product descriptions are provided in multiple languages.");
+                entity.HasComment(
+                    "Product names and descriptions. Product descriptions are provided in multiple languages.");
 
                 entity.Property(e => e.CultureId)
                     .IsRequired()
@@ -3764,7 +3844,8 @@ namespace Products.API
 
                 entity.ToView("vProductModelCatalogDescription", "Production");
 
-                entity.HasComment("Displays the content from each element in the xml column CatalogDescription for each product in the Production.ProductModel table that has catalog data.");
+                entity.HasComment(
+                    "Displays the content from each element in the xml column CatalogDescription for each product in the Production.ProductModel table that has catalog data.");
 
                 entity.Property(e => e.Color).HasMaxLength(256);
 
@@ -3825,7 +3906,8 @@ namespace Products.API
 
                 entity.ToView("vProductModelInstructions", "Production");
 
-                entity.HasComment("Displays the content from each element in the xml column Instructions for each product in the Production.ProductModel table that has manufacturing instructions.");
+                entity.HasComment(
+                    "Displays the content from each element in the xml column Instructions for each product in the Production.ProductModel table that has manufacturing instructions.");
 
                 entity.Property(e => e.LaborHours).HasColumnType("decimal(9, 4)");
 
@@ -3988,7 +4070,8 @@ namespace Products.API
 
                 entity.ToView("vStoreWithAddresses", "Sales");
 
-                entity.HasComment("Stores (including store addresses) that sell Adventure Works Cycles products to consumers.");
+                entity.HasComment(
+                    "Stores (including store addresses) that sell Adventure Works Cycles products to consumers.");
 
                 entity.Property(e => e.AddressLine1)
                     .IsRequired()
@@ -4029,7 +4112,8 @@ namespace Products.API
 
                 entity.ToView("vStoreWithContacts", "Sales");
 
-                entity.HasComment("Stores (including store contacts) that sell Adventure Works Cycles products to consumers.");
+                entity.HasComment(
+                    "Stores (including store contacts) that sell Adventure Works Cycles products to consumers.");
 
                 entity.Property(e => e.BusinessEntityId).HasColumnName("BusinessEntityID");
 
@@ -4068,7 +4152,8 @@ namespace Products.API
 
                 entity.ToView("vStoreWithDemographics", "Sales");
 
-                entity.HasComment("Stores (including demographics) that sell Adventure Works Cycles products to consumers.");
+                entity.HasComment(
+                    "Stores (including demographics) that sell Adventure Works Cycles products to consumers.");
 
                 entity.Property(e => e.AnnualRevenue).HasColumnType("money");
 
@@ -4199,7 +4284,8 @@ namespace Products.API
                     .HasDefaultValueSql("((1))")
                     .HasComment("0 = Vendor no longer used. 1 = Vendor is actively used.");
 
-                entity.Property(e => e.CreditRating).HasComment("1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average");
+                entity.Property(e => e.CreditRating)
+                    .HasComment("1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average");
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
@@ -4214,7 +4300,8 @@ namespace Products.API
                 entity.Property(e => e.PreferredVendorStatus)
                     .IsRequired()
                     .HasDefaultValueSql("((1))")
-                    .HasComment("0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.");
+                    .HasComment(
+                        "0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.");
 
                 entity.Property(e => e.PurchasingWebServiceUrl)
                     .HasColumnName("PurchasingWebServiceURL")
@@ -4286,7 +4373,7 @@ namespace Products.API
 
             modelBuilder.Entity<WorkOrderRouting>(entity =>
             {
-                entity.HasKey(e => new { e.WorkOrderId, e.ProductId, e.OperationSequence })
+                entity.HasKey(e => new {e.WorkOrderId, e.ProductId, e.OperationSequence})
                     .HasName("PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence");
 
                 entity.ToTable("WorkOrderRouting", "Production");
@@ -4303,7 +4390,8 @@ namespace Products.API
                     .HasColumnName("ProductID")
                     .HasComment("Primary key. Foreign key to Product.ProductID.");
 
-                entity.Property(e => e.OperationSequence).HasComment("Primary key. Indicates the manufacturing process sequence.");
+                entity.Property(e => e.OperationSequence)
+                    .HasComment("Primary key. Indicates the manufacturing process sequence.");
 
                 entity.Property(e => e.ActualCost)
                     .HasColumnType("money")
@@ -4323,7 +4411,8 @@ namespace Products.API
 
                 entity.Property(e => e.LocationId)
                     .HasColumnName("LocationID")
-                    .HasComment("Manufacturing location where the part is processed. Foreign key to Location.LocationID.");
+                    .HasComment(
+                        "Manufacturing location where the part is processed. Foreign key to Location.LocationID.");
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")

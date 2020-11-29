@@ -8,8 +8,8 @@ namespace Products.API.Repositories
 {
     public class ProductRepository
     {
-        private readonly ILogger<ProductRepository> logger;
         private readonly ProductContext db;
+        private readonly ILogger<ProductRepository> logger;
 
         public ProductRepository(ProductContext context, ILogger<ProductRepository> logger)
         {

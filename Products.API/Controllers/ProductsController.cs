@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Products.API.Repositories;
 
 namespace Products.API.Controllers
@@ -29,10 +27,7 @@ namespace Products.API.Controllers
         {
             var product = await repository.Get(id);
 
-            if (product == null)
-            {
-                return NotFound();
-            }
+            if (product == null) return NotFound();
 
             return new ObjectResult(product);
         }
@@ -40,10 +35,7 @@ namespace Products.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> Post(Product product)
         {
-            if (product == null)
-            {
-                return BadRequest();
-            }
+            if (product == null) return BadRequest();
 
             await repository.Add(product);
 
@@ -53,15 +45,9 @@ namespace Products.API.Controllers
         [HttpPut]
         public async Task<ActionResult<Product>> Put(Product product)
         {
-            if (product == null)
-            {
-                return BadRequest();
-            }
+            if (product == null) return BadRequest();
 
-            if (await repository.Get(product.ProductId) == null)
-            {
-                return NotFound();
-            }
+            if (await repository.Get(product.ProductId) == null) return NotFound();
 
             await repository.Update(product);
             return Ok(product);
@@ -72,10 +58,7 @@ namespace Products.API.Controllers
         public async Task<ActionResult<Product>> Delete(int id)
         {
             var product = await repository.Get(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            if (product == null) return NotFound();
 
             await repository.Delete(id);
             return Ok(product);

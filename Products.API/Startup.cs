@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Products.API.Interfaces;
+using Products.API.Options;
 using Products.API.Repositories;
+using Products.API.Services;
 using Serilog;
-using Serilog.Events;
 
 namespace Products.API
 {
@@ -24,26 +25,20 @@ namespace Products.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<ApiOptions>(Configuration.GetSection(ApiOptions.SectionName));
+            services.Configure<AzureQueueOptions>(Configuration.GetSection(AzureQueueOptions.SectionName));
+            services.Configure<AzureStorageOptions>(Configuration.GetSection(AzureStorageOptions.SectionName));
             services.AddDbContext<ProductContext>();
+            services.AddTransient<ProductRepository>();
+            services.AddTransient<IDocumentService, DocumentService>();
+            services.AddTransient<IAzureStorageService, AzureStorageService>();
+            services.AddTransient<IAzureServiceBusService, AzureServiceBusService>();
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddTransient<ProductRepository>();
-
-            //services.AddLogging(loggingBuilder =>
-            //{
-            //    loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
-            //    loggingBuilder.AddConsole();
-            //    loggingBuilder.AddDebug();
-            //    loggingBuilder.AddSerilog(new LoggerConfiguration()
-            //        .ReadFrom.Configuration(Configuration)
-            //        .CreateLogger());
-            //});
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
@@ -54,6 +49,9 @@ namespace Products.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V4");
                 c.RoutePrefix = string.Empty;
             });
+
+            //app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
