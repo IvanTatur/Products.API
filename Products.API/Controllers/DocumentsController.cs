@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Products.API.Constants;
 using Products.API.Interfaces;
 using Products.API.Options;
+using Products.API.Services;
 
 namespace Products.API.Controllers
 {
@@ -19,7 +20,6 @@ namespace Products.API.Controllers
         private readonly IDocumentService documentService;
         private readonly ILogger<DocumentsController> logger;
         private readonly ApiOptions options;
-
 
         public DocumentsController(IOptions<ApiOptions> options, IDocumentService documentService,
             ILogger<DocumentsController> logger)

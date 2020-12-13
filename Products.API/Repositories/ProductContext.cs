@@ -14,12 +14,5 @@ namespace Products.API.Repositories
         }
 
         public virtual DbSet<Product> Product { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer(
-                    "Server=sql-tatur.eastus.cloudapp.azure.com;Database=AdventureWorks2017;User ID=sa; Password=Adminpassword1;");
-        }
     }
 }

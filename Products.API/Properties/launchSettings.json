@@ -15,6 +15,7 @@
       "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+
       }
     },
     "Products.API": {
@@ -23,7 +24,10 @@
       "launchUrl": "",
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_CLIENT_SECRET": "]*em!ic7wj)P5i(WCat#j:~Kv_m`J}T9",
+        "AZURE_CLIENT_ID": "ad0bde5d-7046-43d2-8aa9-04aa5627f19f",
+        "AZURE_TENANT_ID": "b41b72d0-4e9f-4c26-8a69-f949f367c91d"
       }
     }
   }

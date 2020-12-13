@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,6 +28,10 @@ namespace Products.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var dbConnectionString = Configuration.GetValue<string>("DbConnectionStrings:DefaultConnection");
+
+            services.AddSingleton<KeyVaultProvider>();
+            services.AddDbContext<ProductContext>(options => options.UseSqlServer(dbConnectionString));
             services.Configure<ApiOptions>(Configuration.GetSection(ApiOptions.SectionName));
             services.Configure<AzureQueueOptions>(Configuration.GetSection(AzureQueueOptions.SectionName));
             services.Configure<AzureStorageOptions>(Configuration.GetSection(AzureStorageOptions.SectionName));

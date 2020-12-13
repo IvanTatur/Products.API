@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Permissions;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -17,11 +18,13 @@ namespace Products.API.Services
         private readonly AzureQueueOptions options;
         private readonly ILogger<AzureServiceBusService> logger;
 
-        public AzureServiceBusService(IOptions<AzureQueueOptions> options, ILogger<AzureServiceBusService> logger)
+        public AzureServiceBusService(IOptions<AzureQueueOptions> options, ILogger<AzureServiceBusService> logger, KeyVaultProvider keyVaultProvider)
         {
             this.logger = logger;
             this.options = options.Value;
-            client = CloudStorageAccount.Parse(this.options.ConnectionString).CreateCloudQueueClient();
+
+            var messageBusConnectionString = keyVaultProvider.GetValueBySecretAsync(this.options.ConnectionString).Result;
+            client = CloudStorageAccount.Parse(messageBusConnectionString).CreateCloudQueueClient();
         }
 
         public async Task SendAsync(MessageContract contract)

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Products.API
 {
@@ -6,6 +8,7 @@ namespace Products.API
     {
         public AdventureWorks2017Context()
         {
+           
         }
 
         public AdventureWorks2017Context(DbContextOptions<AdventureWorks2017Context> options)
@@ -104,15 +107,7 @@ namespace Products.API
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<WorkOrder> WorkOrder { get; set; }
         public virtual DbSet<WorkOrderRouting> WorkOrderRouting { get; set; }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer(
-                    "Server=sql-tatur.eastus.cloudapp.azure.com;Database=AdventureWorks2017;User ID=sa; Password=Adminpassword1;");
-        }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Address>(entity =>

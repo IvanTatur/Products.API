@@ -11,23 +11,21 @@ namespace Products.API.Services
     public class AzureStorageService : IAzureStorageService
     {
         private readonly AzureStorageOptions options;
+        private readonly KeyVaultProvider keyVaultProvider;
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="AzureStorageService" /> class.
-        /// </summary>
-        /// <param name="snapshot">The snapshot.</param>
-        public AzureStorageService(IOptions<AzureStorageOptions> snapshot)
+        public AzureStorageService(IOptions<AzureStorageOptions> snapshot, KeyVaultProvider keyVaultProvider)
         {
+            this.keyVaultProvider = keyVaultProvider;
             options = snapshot.Value;
         }
 
-        /// <inheritdoc />
         public async Task UploadStreamAsync(Stream stream,
             string blobContainerName,
             string blobFilePath,
             CancellationToken cancellationToken)
         {
-            var containerClient = new BlobContainerClient(options.ConnectionString, blobContainerName);
+            var storageConnectionString = await keyVaultProvider.GetValueBySecretAsync(options.ConnectionString);
+            var containerClient = new BlobContainerClient(storageConnectionString, blobContainerName);
             await containerClient.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
             await containerClient.UploadBlobAsync(blobFilePath, stream, cancellationToken);
         }
